@@ -9,15 +9,21 @@ jobs:
     name: Building Functional/Performance Specification
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Docker Cache
+        uses: satackey/action-docker-layer-caching@v0.0.11
+        continue-on-error: true
       - name: Build the PDF
         run: |
           docker run -v ${{ github.workspace }}/functional_performance_specification:/data blang/latex make
+      - name: Rename the PDF
+        run: mv functional_performance_specification/index.pdf functional_performance_specification/functional_performance_specification.pdf
       - name: Upload the PDF
         uses: actions/upload-artifact@v3
         with:
-          name: functional-performance-specification.pdf
-          path: ./functional-performance-specification/index.pdf
+          name: functional_performance_specification
+          path: functional_performance_specification/functional_performance_specification.pdf
 
   release:
     name: Generating release
@@ -36,10 +42,11 @@ jobs:
       - name: Download Functional Performance Specification
         uses: actions/download-artifact@v3
         with:
-          name: functional-performance-specification.pdf
+          name: functional_performance_specification
       - name: Generate Release
-        uses: softprops/action-gh-release@v1
+        uses: ncipollo/release-action@v1
         with:
+          artifacts: "functional_performance_specification.pdf"
+          token: ${{ secrets.GITHUB_TOKEN }}
           name: Build ${{ steps.date.outputs.date }}/${{ steps.buildnumber.outputs.build_number }}
-          files: |
-            functional-performance-specification.pdf
+          tag: ${{ steps.date.outputs.date }}/${{ steps.buildnumber.outputs.build_number }}
