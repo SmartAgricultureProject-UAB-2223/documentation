@@ -1,2 +1,8 @@
 dist/
 index.pdf
+
+index.aux
+index.fdb_latexmk
+index.fls
+index.log
+index.synctex.gz
