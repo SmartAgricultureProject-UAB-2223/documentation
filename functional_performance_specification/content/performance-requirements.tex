@@ -1,4 +1,73 @@
-/section{Performance requirements}
-% TODO: The section
-The device uses a wireless technology that enables low-power, short-range communication
-between the four sensors and the smartphone: \textbf{Bluetooth Low Energy} (BLE).\\
+\section{Performance requirements}
+We can analyze the performance requirements of this system by dividing it in three
+parts: requirements for the device, for edge devices (i.e. smartphones), and for
+the online server. We will discuss each of these parts separately.
+
+\subsection{Device}
+The requirements for the device are simple. No high computational power is required,
+since the device will only be used to collect data from sensors and send it to the
+server, and the local calculations that are required are very simple, such that
+they can be executed by most of the devices that are available on the market. \\
+Much more important are size, power consumption, durability and storage requirements
+for the device.
+
+\subsubsection{Size}
+The device is meant to be inserted into or near the soil, since
+the sensors must be inside the pot. This means that, if usage of "standard" 1L plant
+pots is supported, the final result can't occupy more space than a circle of 40mm
+in diameter (more leeway is given in regards to thickness), plus the sensors.
+
+\subsubsection{Power consumption}
+The device is meant to be running constantly, in places where it is not always possible
+to have direct access to electricity - plant pots are not usually placed near power
+sockets. This means that the device must be able to run on batteries for a long time,
+and that the power consumption must be as low as possible. \\
+Considering the current state of the art as far as batteries go, it is possible
+and thus necessary to develop a device that can run for at least a year on a single
+charge. The battery might violate the size requirement, but this could be mitigated
+in various ways. \\
+The power consumption of the device is also important, since it will be running
+constantly. It should not be consuming, on average, on more than a single watt.
+This figure takes into account peaks in power consumption, such as when the device
+is sending data to the mobile device or extracting data from sensors.
+
+\subsubsection{Durability}
+The device must be able to withstand the conditions in which it will be used. This
+means that it must be waterproof. More extreme conditions should not be taken into
+consideration for now, since any condition that is so extreme as to potentially
+damage the device would also be extremely dangerous for the plants, such that there
+is no reasonable use case for the device in such conditions.
+
+\subsubsection{Storage}
+The device must be able to store the data it collects for a long time, since it will
+upload it only when given access to the internet through a mobile device using the
+app. Reasonably, the device should at most be able to store data for a few months.
+This might mean needing a small amount of flash memory (128MB is, at this point in time,
+a reasonable estimate since it's still unknown how much data will be generated for
+storage), and possibly implementing some data compression algorithm to reduce the
+amount of data that needs to be stored.
+
+\subsection{Edge}
+The software requirements are also quite simple. The software that runs on the device
+must be able to collect data from the sensors and send it to the server through a
+mobile application. The application itself should run on modern smartphones using
+any of the major operating systems (Android, iOS). The application would store the
+data, and execute calculations on it locally. It must also be able to upload this
+data to a server for backups and social sharing.\\
+The need for direct communication between a Smartphone app and the device greatly
+restricts the possible solutions as far as data transfer goes. Any protocol used
+must be supported by devices running any modern mobile operating system. Additionally,
+the limited throughput of some of the protocols (such as Bluetooth) means that care
+should be put into both reducing the amount of transfered data, and taking care of
+transfer errors and interruptions that would be made much more common the longer
+the transfer takes.
+
+\subsection{Server}
+The server itself only needs to be able to store the data and implement the most
+basic of authentication mechanisms. There is the possibility of having it execute
+the calculations on the data, instead of having the mobile device upload the results,
+but at the current time this does not seem necessary. This means that the server's
+performance requirements are quite low, especially during the launch phase. Additionally,
+modern web cloud technology allows for dynamic scaling of server resources, such
+that the current estimate only needs to take into account the initial user base
+of the application.
