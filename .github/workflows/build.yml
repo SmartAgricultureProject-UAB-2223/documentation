@@ -6,6 +6,26 @@ on:
 
 jobs:
   functional_performance_specification:
+      name: Building Functional/Performance Specification
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v3
+        - name: Docker Cache
+          uses: satackey/action-docker-layer-caching@v0.0.11
+          continue-on-error: true
+        - name: Build the PDF
+          run: |
+            docker run -v ${{ github.workspace }}/functional_performance_specification:/data blang/latex make
+        - name: Rename the PDF
+          run: mv functional_performance_specification/index.pdf functional_performance_specification/functional_performance_specification.pdf
+        - name: Upload the PDF
+          uses: actions/upload-artifact@v3
+          with:
+            name: functional_performance_specification
+            path: functional_performance_specification/functional_performance_specification.pdf
+
+  first_submission:
     name: Building Functional/Performance Specification
     runs-on: ubuntu-latest
     steps:
@@ -16,14 +36,14 @@ jobs:
         continue-on-error: true
       - name: Build the PDF
         run: |
-          docker run -v ${{ github.workspace }}/functional_performance_specification:/data blang/latex make
+          docker run -v ${{ github.workspace }}/first_submission:/data blang/latex make
       - name: Rename the PDF
-        run: mv functional_performance_specification/index.pdf functional_performance_specification/functional_performance_specification.pdf
+        run: mv first_submission/index.pdf first_submission/first_submission.pdf
       - name: Upload the PDF
         uses: actions/upload-artifact@v3
         with:
-          name: functional_performance_specification
-          path: functional_performance_specification/functional_performance_specification.pdf
+          name: first_submission
+          path: first_submission/first_submission.pdf
 
   release:
     name: Generating release
@@ -43,6 +63,10 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: functional_performance_specification
+       - name: Download First Submission
+        uses: actions/download-artifact@v3
+        with:
+          name: first_submission
       - name: Generate Release
         uses: ncipollo/release-action@v1
         with:
