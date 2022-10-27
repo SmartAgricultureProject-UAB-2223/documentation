@@ -63,5 +63,5 @@ jobs:
         with:
           artifacts: "functional_performance_specification.pdf"
           token: ${{ secrets.GITHUB_TOKEN }}
-          name: Build \#${{ github.run_number }}
+          name: "Build #${{ github.run_number }}"
           tag: builds/${{ github.run_number }}
