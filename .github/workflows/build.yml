@@ -61,7 +61,7 @@ jobs:
       - name: Generate Release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "functional_performance_specification.pdf"
+          artifacts: "functional_performance_specification.pdf,first_submission.pdf"
           token: ${{ secrets.GITHUB_TOKEN }}
           name: "Build #${{ github.run_number }}"
           tag: builds/${{ github.run_number }}
