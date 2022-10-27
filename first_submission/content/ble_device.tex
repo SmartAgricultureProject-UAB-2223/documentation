@@ -1,0 +1,14 @@
+\section{BLE library on the device}
+We program the nRF52840 board using VS Code (Microsoft Visual Studio Code) with PlatformIO IDE extension.
+First, we configured the PlatformIO configuration file (platformio.ini) for our project:
+\begin{itemize}
+    \item \textbf{platform}: the system on chip (SoC) used our board is \textit{nordicnrf52}.
+    \item \textbf{board} : the development board we use is \textit{nrf52840\_dk}.
+    \item \textbf{framework} : the software environment that runs our project code is \textit{arduino}.
+\end{itemize}
+Then, since we want to establish a data transmission between the device and the android app via a BLE connection, we add in this configuration file the two necessary parameters : 
+\begin{itemize}
+    \item \textbf{build\_flags} : the compiler must generate the code with the flag \textit{-DNRF52\_S132}.
+    \item \textbf{lib\_deps} : \textit{sandeepmistry/BLEPeripheral@\^0.4.0} is an arduino library for creating custom BLE peripherals with this board.
+\end{itemize}
+% TODO: The section
