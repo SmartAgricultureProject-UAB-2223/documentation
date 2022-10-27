@@ -26,7 +26,7 @@ jobs:
             path: functional_performance_specification/functional_performance_specification.pdf
 
   first_submission:
-    name: Building Functional/Performance Specification
+    name: Building First Submission
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
