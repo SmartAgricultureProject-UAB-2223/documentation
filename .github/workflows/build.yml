@@ -48,7 +48,7 @@ jobs:
   release:
     name: Generating release
     runs-on: ubuntu-latest
-    needs: functional_performance_specification
+    needs: [functional_performance_specification, first_submission]
     steps:
       - name: Get current date
         id: date
@@ -63,7 +63,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: functional_performance_specification
-       - name: Download First Submission
+      - name: Download First Submission
         uses: actions/download-artifact@v3
         with:
           name: first_submission
