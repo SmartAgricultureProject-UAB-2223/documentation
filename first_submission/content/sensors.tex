@@ -20,5 +20,11 @@ The DHT11 sensor is a temperature and humidity sensor and a 3-wire module: VCC (
 
 According to the specifications of the DHT11 sensor and considering that the board was connected by cable to the computer we
 knew that we could connect the VCC cable to either 3.5V or 5V \cite{b1}. On our NRF52840 board however only the 5V was available. 
-Regarding the data wire, we found that a possible option was to connect it to the GPIO14 (DTX)\cite{b2}. On the NRF52840 it 
-corresponds to the P0.06. And the corresponding raw pin of the GPIO14 was 14.
+Regarding the data wire, we found that a possible option was to connect it to the GPIO14 (DTX)\cite{b2}. On the NRF52840 it corresponds to the P0.06 [Fig. \ref{fig:DTX}]. And the corresponding raw pin of the GPIO14 was 14. 
+
+\begin{figure}[!ht]%
+    \centering
+    \includegraphics[scale=0.2]{images/GPIO14Arduino.jpg}%
+    \caption{Equivalence P0.06 to DTX}%
+    \label{fig:DTX}%
+\end{figure}
