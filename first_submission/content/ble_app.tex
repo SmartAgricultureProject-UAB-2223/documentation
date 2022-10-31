@@ -1,2 +1,32 @@
 \section{BLE library in the Flutter app}
-% TODO: The section
+The edge component of the application is an Android/iOS application written using
+the Flutter framework\cite{b4} and using the Flutter Blue library\cite{b5} to communicate
+with the BLE peripheral.
+\subsection{Environment setup}
+We program the application using Visual Studio Code with the Flutter extension, and
+we use the Android Studio to run the application on an Android device and manage the
+Android SDK. \\
+To enable the Flutter Blue library, we add the following dependency to the pubspec.yaml file:
+\begin{lstlisting}
+dependencies:
+    [| \ldots |]
+    flutter_blue: ^0.8.0
+\end{lstlisting}
+
+\subsection{Use of the Flutter Blue library}
+The Flutter Blue library gets initialized through the creation of a FlutterBlue object.
+This object is used to scan for BLE peripherals, connect to them, and read/write data. \\
+
+This is done by first of all binding some functions to the FlutterBlue objects through
+the FlutterBlue.scanResults\#listen method, adding the scanned devices to the containing
+widget's state. \\
+
+At that point, the scan can be started with the FlutterBlue\#startScan method, and
+a connection with a specific device can be established with the device\#connect
+method (using the Device object that we receive when scanning for new connections). \\
+
+As the NOTIFY characteristic is enabled on our device, once a connection is established,
+we are able to receive data from the device without having to explicitly ask for it.
+This is done through the Characteristic\#setNotifyValue method and the Characteristic\#listen
+method, both coming from a Characteristic object that we can extract from the Service
+objects returned by the device\#discoverServices method. \\
