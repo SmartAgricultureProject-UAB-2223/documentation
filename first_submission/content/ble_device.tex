@@ -20,7 +20,7 @@ Then we define
     \item a timer variable
     \item an interval at which we send data (in milliseconds)
 \end{itemize}
-We then proceed to create the misc structured model according to ArduinoBLE \cite{b3}.
+We then proceed to create the structured model according to ArduinoBLE \cite{b3}.
 \begin{figure}[!htb]%
     \centering
     \includegraphics[scale=0.2]{images/ble-bulletin-board-model.png}%
@@ -30,7 +30,7 @@ We then proceed to create the misc structured model according to ArduinoBLE \cit
 Considering this scheme [Fig. \ref{fig:ArduinoBLE}], we initialize a BLEPeripheral object acting as the peripheral device, a BLEService and a BLECharCharacteristic objects acting as the DHT11 sensor service for temperature characteristic which we specify with a UUID generating from the Internet.
 We enable the NOTIFY property of the characteristic: when the sender writes to it, the new value is automatically sent to the receiver (the android app), without the receiver having to issue an explicit read command.
 
-We create callback functions for central connect and disconnect event, for characteristic subscribe and unsubscribed event.
+We create callback functions for central connect and disconnect event, and for characteristic subscribe and unsubscribed event.
 
 The setup() function initializes and defines the initial values: set sensor pin, assigns the service and characteritic to the device, assign event handlers ...
 Finally, the loop() function starts the peripheral, handles the callbacks, read the analog input and save it in the characteristic (in hexacimal format) according to a timer function.
