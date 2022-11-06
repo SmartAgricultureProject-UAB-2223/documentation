@@ -48,17 +48,19 @@ tier are not relevant) and with yearly contracts in mind.
 
 \begin{table}
     \centering
-    \begin{tabularx}{\columnwidth}{|l|c|c|c|}
+    \begin{tabularx}{\columnwidth}{|l|c|c|}
         \hline
         \textbf{Feature} & \textbf{AWS} & \textbf{Azure} \\
         \hline
         Database Pricing &
-            \$0.25 per GB per month + \$1.25 per million writes + \$0.25 per million reads & 
-            \$0.25 per GB per month + \$0.28 per million requests \\
+            \$0.25/GB per month & \$0.25/GB per month \\
+         & \$1.25/m writes & \$0.28/m requests \\
+         & \$0.25/m reads \\
         \hline
         Linux Server Pricing &
-            \$10 per month (T2.small instance)& 
-            \$10 per month (B1ms instance) \\
+            \$10/month (T2.small) & 
+            \$10/month (B1ms) \\
+        \hline
         \end{tabularx}
 \end{table}
 
@@ -66,7 +68,28 @@ As seen, the main difference is in the database pricing. AWS is cheaper for read
 but Azure is cheaper for writes. The Linux server pricing is the same for both options
 at the size we're looking at. Additionally, Azure offers an IoT Hub service that
 could replace some of the functionality of the web component.
-\subsection{Data format}
+\subsection{Data formats}
+\subsubsection*{Storing data on the device}
+It is important to choose a data format that is easy to parse programmatically and
+can be easily transmitted to the edge device. The most basic data format could simply
+be raw bytes, allocating a certain number of bytes for each sensor reading plus the
+time. While simple, easy to parse and computationally efficient, this format would
+require a lot of bandwidth when sent over a wireless network, and over time it would
+occupy a lot of space on the device. A more complex solution would be saving only some
+measurements (e.g. one every hour, or when the edge device pulls the data), while
+the rest are saved as deltas from the last measurement. This would mean that, in
+standard usage, the device could possibly be storing only a few bytes per hour, but
+it comes at the cost of either more complex parsing on the edge device, or more
+computation on the device itself.
+\subsubsection*{Data aggregation and transmission}
+Deciding where and how to aggregate the data is a key decision in the design of the
+system. On the device, the data should be kept as unprocessed as possible, to allow the device
+and the edge device to access at least once the raw sensor readings. It's when the data
+gets to the edge device that the problem becomes more interesting. It would probably
+be best to remove any redundant readings as soon as possible, to reduce the amount of
+data sent to the cloud uselessly. This would go well with the idea of storing only
+differences between measurements, as it would allow the edge device to simply discard
+any "blank" deltas it receives.
 
 \subsection{Device-Edge communication protocols}
 The high latency brought on by a sensor device's mobility for remote monitoring in edge-based IoT applications can have detrimental effects including erroneous analysis and poor service quality \cite{b5}. In order to reduce latency and while maintaining a connection, high quality of service, and energy efficiency, mobility support approaches are necessary. Therefore for our IOT solution we will be using a wireless connection for the communication Device-edge: Bluetooth. 
