@@ -35,9 +35,39 @@ They are very similar to each other but can differ in their lifetime and size. P
 \subsubsection{Arduinos and alternative platforms}
 \subsubsection{Edge platforms}
 \subsubsection{Cloud options}
-Azure IoT Hub, AWS, IBM Cloud, Google Cloud \dots
+The available hosting options options, cloud-wise, are all quite similar. They all
+provide a platform to host any web component of the application and database services
+to store the data. The main differences are in pricing and complexity of usage and
+maintenance. The table below shows the main differences between the two main
+options considered: AWS and Azure. The table is based on the assumption
+that the web component will be hosted on a Linux server and the database will be
+hosted in a non-relational database (NoSQL) service (e.g. MongoDB, DynamoDB, etc.),
+ignoring free tier options (they are not relevant for our purposes, as the system will
+eventually be deployed in a real-world scenario where the limitations of the free
+tier are not relevant) and with yearly contracts in mind.
+
+\begin{table}
+    \centering
+    \begin{tabularx}{\columnwidth}{|l|c|c|c|}
+        \hline
+        \textbf{Feature} & \textbf{AWS} & \textbf{Azure} \\
+        \hline
+        Database Pricing &
+            \$0.25 per GB per month + \$1.25 per million writes + \$0.25 per million reads & 
+            \$0.25 per GB per month + \$0.28 per million requests \\
+        \hline
+        Linux Server Pricing &
+            \$10 per month (T2.small instance)& 
+            \$10 per month (B1ms instance) \\
+        \end{tabularx}
+\end{table}
+
+As seen, the main difference is in the database pricing. AWS is cheaper for reads,
+but Azure is cheaper for writes. The Linux server pricing is the same for both options
+at the size we're looking at. Additionally, Azure offers an IoT Hub service that
+could replace some of the functionality of the web component.
 \subsection{Data format}
-JSON ? 
+
 \subsection{Device-Edge communication protocols}
 The high latency brought on by a sensor device's mobility for remote monitoring in edge-based IoT applications can have detrimental effects including erroneous analysis and poor service quality \cite{b5}. In order to reduce latency and while maintaining a connection, high quality of service, and energy efficiency, mobility support approaches are necessary. Therefore for our IOT solution we will be using a wireless connection for the communication Device-edge: Bluetooth. 
 \subsubsection{Bluetooth types}
@@ -97,10 +127,11 @@ As MQTT was designed for IoT solutions it fits many more IoT scenarios than its 
 Will and retained messages are two MQTT capabilities that AMQP does not directly support \cite{b2}. Moreover, mistakes might be made when configuring routing topologies of AMQP, which is impossible in the more straightforward MQTT environment.\\
 The cost of connection setup is a small drawback of MQTT versus HTTPS. This overhead may be higher than HTTPS if each TCP session only sends one message. However, because this is not a typical IoT case, MQTT soon becomes advantageous when several messages are transmitted and received within the same TCP session \cite{b3}. HTTPS also needs more power and memory to function than MQTT.\\
 
-Considering the advantages and disadvantages of the different protocols listed above and taking into account the comparison table. It seems like the best protocols to implement for the HPCS would be MQTT or HTTPS protocols with a preference for MQTT.
+Considering the advantages and disadvantages of the different protocols listed above and taking into account the comparison table.
+It seems like the best protocols to implement for the HPCS would be MQTT or HTTPS protocols with a preference for MQTT.
 
 \newpage
-\begin{table}[htbp]
+\begin{table*}
     \caption{Communication protocols comparison}
     \begin{center}
     \renewcommand{\arraystretch}{2}
@@ -143,4 +174,4 @@ Considering the advantages and disadvantages of the different protocols listed a
     \end{tabular}
     \label{tab-1}
     \end{center}
-    \end{table}
+    \end{table*}
