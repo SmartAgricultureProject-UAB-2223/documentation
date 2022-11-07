@@ -4,31 +4,90 @@ We present below different possible implementations of the previous diagram.
 \subsection{Sensors}
 The tables below show the different options for the four sensors required in our HPCS system.
 
-\begin{figure}[h]
-    \includegraphics[width=\linewidth]{images/ph-sensor-comparison.png}
-    \caption{pH Sensor comparison}
-    \label{fig:pH Sensor Comparison}
-\end{figure}
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{c c c}
+        \hline
+        \textbf{Manufacturer} & GAOHOU & DFRobot\\
+        \hline
+        \textbf{Model} & \href{https://www.amazon.com/GAOHOU-PH0-14-detecci%C3%B3n-electrodo-Arduino/dp/B0799BXMVJ/ref=sr_1_1_sspa?keywords=pH+Sensor+Arduino&qid=1667674873&sr=8-1-spons&psc=1}{YY6237} & \href{https://www.dfrobot.com/product-1025.html}{SEN0161}\\
+        \textbf{Working temperature (℃)} & -10 ~ 50 & 0 ~ 60\\
+        \textbf{Response time (S)} & $\leq$ 5 & $\leq$ 60\\
+        \textbf{pH range} & 0 - 14 & 0 - 14\\
+        \textbf{Voltage (V)} & ~5 & ~5\\
+        \textbf{Size (cm)} & 4.5 x 3.2 & 4.3 x 3.2\\
+        \textbf{Weight (g)} & 136 & 160\\
+        \textbf{Price 1 unit (\$)} & 34.99 & 29.50\\
+        \textbf{Price 100 units (\$)} & 34.99 & 27.00\\
+        \hline
+        \end{tabular}
+    \caption{pH sensor comparison}
+    \label{tab:ph_sensor_comparison}
+\end{table}
 
-\begin{figure}[h]
-    \includegraphics[width=\linewidth]{images/temp-hum-sensor-comparison.png}
-    \caption{Temperature - Humidity Sensor comparison}
-    \label{fig:Temperature - Humidity Sensor Comparison}
-\end{figure}
+\begin{table}[!h]
+    \centering
+    \scriptsize
+    \begin{tabular}{c c c c}
+        \hline
+        \textbf{Manufacturer} & Adafruit & DFRobot & SparkFun\\
+        \hline
+        \textbf{Model} & \href{https://www.adafruit.com/product/4832}{HTU31} & \href{https://www.dfrobot.com/product-1102.html}{SEN0137 (DHT22)} & \href{https://www.sparkfun.com/products/13763#reviews}{SEN-13763}\\
+        \textbf{Temperature range (℃)} & -40 ~ +125 & -40 ~ + 80 & -40 ~ +125\\
+        \textbf{Accuracy (℃)} & ± 0.2 & ± 0.5 & ± 0.4\\
+        \textbf{Humidity range (\%RH)} & 0-100 & 0-100 & 0-100\\
+        \textbf{Accuracy (\%RH)} & ± 2 & ± 2 & ± 3\\
+        \textbf{Voltage (V)} & 3.3 - 5 & 5 & 1.9 - 3.6\\
+        \textbf{Size (cm)} & 2.5 x 1.7 & 3.8 x 2.0 & 1.5 x 1.5\\
+        \textbf{Weight (g)} & 1.6 & 13 & 1.3\\
+        \textbf{Price 1 unit (\$)} & 6.95 & 8.70 & 10.95\\
+        \textbf{Price 100 units (\$)} & 5.56 & 8.30 & 10.95\\
+        \hline
+        \end{tabular}
+    \caption{Temperature - Humidity sensor comparison}
+    \label{tab:temp_hum_sensor_comparison}
+\end{table}
 
-\begin{figure}[h]
-    \includegraphics[width=\linewidth]{images/light-sensor-comparison.png}
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{c c c c}
+        \hline
+        \textbf{Manufacturer} & Adafruit & Adafruit & DFRobot\\
+        \hline
+        \textbf{Model} & \href{https://www.adafruit.com/product/4681}{BH1750} & \href{https://learn.adafruit.com/tsl2561}{TSL2591} & \href{https://www.dfrobot.com/product-274.html}{SEN0043}\\
+        \textbf{Light range (lux)} & 1 - 65535 & 0,000188 - 88000 & 1 – 1000\\
+        \textbf{Waterproof} & No & No & No\\
+        \textbf{Voltage (V)} & 3.3 ~ 6 & 3.3 ~ 5 & 3.3 ~ 5.5\\
+        \textbf{Size (cm)} & 2.5 x 1.7 & 1.9 x 1.6 & 3.0 x 2.2\\
+        \textbf{Weight (g)} & 1.1 & 1.1 & 5\\
+        \textbf{Price 1 unit (\$)} & 4.50 & 6.95 & 5.90\\
+        \textbf{Price 100 units (\$)} & 3.60 & 5.56 & 5.30\\
+        \hline
+        \end{tabular}
     \caption{Light Sensor comparison}
-    \label{fig:Light Sensor Comparison}
-\end{figure}
+    \label{tab:light_sensor_comparison}
+\end{table}
+
 \subsection{Battery}
 The table below compares some non-rechargeable button cell batteries that would be suitable for our system \cite{b7}.
 They are very similar to each other but can differ in their lifetime and size. Prices are those of the seller Ace Hardware.
-\begin{figure}[h]
-    \includegraphics[width=\linewidth]{images/battery-comparison.jpg}
-    \caption{Battery comparison}
-    \label{fig:Battery Comparison}
-\end{figure}
+\begin{table}[!h]
+    \scriptsize
+    \centering
+    \begin{tabular}{c c c c c c}
+        \hline
+        \textbf{Model} & \href{https://www.energizer.com/specialty-batteries/2032-battery}{CR2032} & \href{https://www.energizer.com/specialty-batteries/2025-battery}{CR2025} & \href{https://www.energizer.com/specialty-batteries/2016-battery}{CR2016} & \href{https://www.energizer.com/specialty-batteries/2450-battery}{CR2450} & \href{https://www.energizer.com/specialty-batteries/1632-battery}{CR1632}\\
+        \hline
+        \textbf{Voltage (V)} & 3.0 & 3.0 & 3.0 & 3.0 & 3.0\\
+        \textbf{Capacity (mAh)} & 235 & 170 & 100 & 620 & 130\\
+        \textbf{Size (mm)} & 20.0×3.2 & 20.0×2.5 & 20.0×1.6 & 24.0×5.0 & 16.0×3.2\\
+        \textbf{Weight (g)} & 3.0 & 2.6 & 1.9 & 6.8 & 1.8\\
+        \textbf{Price (\$)} & 6.59 & 6.59 & 6.59 & 7.59 & 7.59\\
+        \hline
+        \end{tabular}
+    \caption{Battery comparison - Energizer Manufacturer}
+    \label{tab:battery_comparison}
+\end{table}
 
 \subsection{Computing platforms}
 \subsubsection{Arduinos and alternative platforms}
