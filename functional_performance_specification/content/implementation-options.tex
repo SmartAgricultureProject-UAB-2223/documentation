@@ -32,7 +32,45 @@ They are very similar to each other but can differ in their lifetime and size. P
 
 \subsection{Computing platforms}
 \subsubsection{Arduinos and alternative platforms}
-\subsubsection{Edge platforms}
+There are many boards available on the market, most of which would be suitable for
+our system. The following comparison between some of them is based on price, size,
+and power consumption.
+\begin{table}
+    \renewcommand{\arraystretch}{2}
+    \begin{tabularx}{\columnwidth}{|l|c|c|c|c|}
+        \hline
+        \textbf{Platform} & \textbf{Price} & \textbf{Size (mm)} & \textbf{BLE} & \textbf{Input pins} \\
+        \hline
+        Arduino Nano 33 & €22.80 & $45 \times 18$ & Yes & 14 \\
+        \hline
+        ESP32-PICO-D4 & €4.95 & $7 \times 7$ & Yes & 20 \\
+        \hline
+        ATmega328 Nano & €8.95 & $44 \times 18$ & No & 14 \\
+        \hline
+    \end{tabularx}
+\end{table}
+
+All these boards are very similar in terms of power consumption and programming
+capabilities, making any comparison on that front irrelevant.
+
+The Arduino Nano 33 is the most expensive of the three, but it is also the most
+supported. ATmega328 Nano is cheaper and smaller, while being fundamentally the
+same, although it's missing a Bluetooth Low Energy module. ESP32-PICO-D4 is the
+cheapest, while also coming with a Bluetooth Low Energy module. Availability of
+development kits means that the board chosen for the final design might not be the
+same as the board used in the proof of concept and prototyping phase. 
+\subsubsection{Edge computing}
+It's been established that a phone or a tablet will act as the edge device in this
+system, with focus on remaining compatible with reasonably-recent Android and iOS
+devices. \\
+The possible frameworks to use for developing the app are React Native, Flutter,
+and NativeScript. Of these, React Native and NativeScript use JavaScript, while
+Flutter uses the Dart programming language. React Native is the most popular of
+the three, while Flutter is the newest and natively integrates with the Google
+"Material Design" guidelines. NativeScript is the least popular of the three, but
+it allows the usage of a large number of existing JavaScript frameworks and libraries
+while still compiling to a native app. \\
+
 \subsubsection{Cloud options}
 The available hosting options options, cloud-wise, are all quite similar. They all
 provide a platform to host any web component of the application and database services
@@ -45,7 +83,7 @@ ignoring free tier options (they are not relevant for our purposes, as the syste
 eventually be deployed in a real-world scenario where the limitations of the free
 tier are not relevant) and with yearly contracts in mind.
 
-\begin{table}
+\begin{table}[htbp]
     \centering
     \begin{tabularx}{\columnwidth}{|l|c|c|}
         \hline
