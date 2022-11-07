@@ -246,11 +246,14 @@ As MQTT was designed for IoT solutions it fits many more IoT scenarios than its 
 Will and retained messages are two MQTT capabilities that AMQP does not directly support \cite{b2}. Moreover, mistakes might be made when configuring routing topologies of AMQP, which is impossible in the more straightforward MQTT environment.\\
 The cost of connection setup is a small drawback of MQTT versus HTTPS. This overhead may be higher than HTTPS if each TCP session only sends one message. However, because this is not a typical IoT case, MQTT soon becomes advantageous when several messages are transmitted and received within the same TCP session \cite{b3}. HTTPS also needs more power and memory to function than MQTT.\\
 
-Considering the advantages and disadvantages of the different protocols listed above and taking into account the comparison table.
+Considering the advantages and disadvantages of the different protocols listed above and taking into account the comparison table [cf Annexe : Table \ref{edge-cloud protocols}].
 It seems like the best protocols to implement for the HPCS would be MQTT or HTTPS protocols with a preference for MQTT.
 
 \newpage
-\begin{table*}
+\onecolumn
+\centering\textbf{ANNEXES}
+
+\begin{table}[htbp]
     \caption{Communication protocols comparison}
     \begin{center}
     \renewcommand{\arraystretch}{2}
@@ -291,6 +294,6 @@ It seems like the best protocols to implement for the HPCS would be MQTT or HTTP
     Object persistence & Yes & Yes & -\\
     \hline
     \end{tabular}
-    \label{tab-1}
+    \label{edge-cloud protocols}
     \end{center}
     \end{table*}
