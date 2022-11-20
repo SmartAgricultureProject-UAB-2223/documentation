@@ -120,7 +120,8 @@ supported. ATmega328 Nano is cheaper and smaller, while being fundamentally the
 same, although it's missing a Bluetooth Low Energy module. ESP32-PICO-D4 is the
 cheapest, while also coming with a Bluetooth Low Energy module. Availability of
 development kits means that the board chosen for the final design might not be the
-same as the board used in the proof of concept and prototyping phase. 
+same as the board used in the proof of concept and prototyping phase. \\
+
 \subsubsection{Edge computing}
 It's been established that a phone or a tablet will act as the edge device in this
 system, with focus on remaining compatible with reasonably-recent Android and iOS
@@ -134,7 +135,7 @@ it allows the usage of a large number of existing JavaScript frameworks and libr
 while still compiling to a native app. \\
 
 \subsubsection{Cloud options}
-The available hosting options options, cloud-wise, are all quite similar. They all
+The available hosting options, cloudwise, are all quite similar. They all
 provide a platform to host any web component of the application and database services
 to store the data. The main differences are in pricing and complexity of usage and
 maintenance. The table below shows the main differences between the two main
@@ -181,13 +182,14 @@ measurements (e.g. one every hour, or when the edge device pulls the data), whil
 the rest are saved as deltas from the last measurement. This would mean that, in
 standard usage, the device could possibly be storing only a few bytes per hour, but
 it comes at the cost of either more complex parsing on the edge device, or more
-computation on the device itself.
+computation on the device itself. \\
+
 \subsubsection*{Data aggregation and transmission}
 Deciding where and how to aggregate the data is a key decision in the design of the
 system. On the device, the data should be kept as unprocessed as possible, to allow the device
 and the edge device to access at least once the raw sensor readings. It's when the data
 gets to the edge device that the problem becomes more interesting. It would probably
-be best to remove any redundant readings as soon as possible, to reduce the amount of
+be better to remove any redundant readings as soon as possible, to reduce the amount of
 data sent to the cloud uselessly. This would go well with the idea of storing only
 differences between measurements, as it would allow the edge device to simply discard
 any "blank" deltas it receives.
@@ -240,8 +242,8 @@ IoT Hub allows devices to use alternative protocols for Edge-Cloud communication
 \subsubsection{MQTT} is a communication protocol with features specifically targeted at IoT solutions. With a small code footprint and low network bandwidth requirements, it is designed as a lightweight publish/subscribe messaging transport that is perfect for linking remote devices.\\
 The ease and flexibility with which solutions can be developed is one of MQTT's best features. Multiple clients can produce and share information with back end systems and each other thanks to the publish-subscribe paradigm.
 
-\subsubsection{AMQP} is a messaging protocol which was created to be a non-proprietary method of connecting applications and was not targeted at IoT solutions. It is used on field and cloud gateways to take advantage of connection multiplexing across devices. One of its benefits is that, while being a complicated messaging system, it is lightweight, has little overhead, and uses minimal CPU and RAM. \\
-For general purpose message queuing, AMQP offers more flexibility than MQTT, at the expense of some efficiency and complexity.However it places a strong emphasis on message delivery that adds to the overhead eventually.
+\subsubsection{AMQP} is a messaging protocol which was created to be a non-proprietary method of connecting applications and was not targeted at IoT solutions. It is used on field and cloud gateways to take advantage of connection multiplexing across devices. One of its benefits is that, while being a complicated messaging system, it is lightweight, has little overhead\footnote{The information that must be sent with data being routed through the network toward a destination.}, and uses minimal CPU and RAM. \\
+For general purpose message queuing, AMQP offers more flexibility than MQTT, at the expense of some efficiency and complexity. However it places a strong emphasis on message delivery that adds to the overhead eventually.
 
 \subsubsection{HTTPS} is a heavy text-based protocol working on a request/response model. A client sends a request to the server, and the server sends back a response.\\
 The main benefit of HTTPS for use in IoT is its familiarity to developers which are likely to have had implemented web solutions of one kind or another. A consequence of this is the availability of client libraries and servers. Additionally it is scalable and can be used with multiple devices.\\
