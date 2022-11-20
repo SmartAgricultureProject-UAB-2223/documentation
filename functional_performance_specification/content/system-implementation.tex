@@ -18,7 +18,14 @@ SEN0161 : both options had similar specs but this one is more advantageous for b
 CR2450 : lowest price, average to low weight, price and size and medium to high capacity
 \subsubsection{Plastic case}
 1553WBBK : IP65 rating, waterproof board coverage 
-\url{https://www.hammfg.com/part/1553WBBK?referer=1180}
+\url{https://www.hammfg.com/part/1553WBBK?referer=1180}\\
+
+\subsubsection*{Programming language}
+The ESP32-PICO-D4 is a System-on-Chip (SoC) integrating an ESP32 chip.
+For easy programming and debugging, we choose to build our HPCS device with the \textbf{\href{https://www.elektor.com/esp32-pico-kit-v4}{ESP32-PICO-KIT}} : a breakout board for this SoC with an on-board USB-to-serial converter. As a result, the final product is already certified for electrical regulations because it is manufactured only with certified parts.\\
+We program this board using VS Code (Microsoft Visual Studio Code) with the PlatformIO IDE extension.
+PlatformIO is an open source ecosystem for IoT development, especially for the ESP32 Pico Kit\cite{b8}. This IDE platform also allows us to program BLE via libraries for ESP32. 
+Thus, the programming langage we use is \textbf{C++} which enables developers to create a portable software that can run on various operating systems.
 
 \subsection{Edge}
 The concept behind the HPCS is to help monitor a plant's environment through an easy-to-use and portable product. Therefore we have decided to use an Android and iOS mobile app as our Edge. This app is in charge of establishing a Bluetooth Low Energy connection with the Device. \\
@@ -27,12 +34,22 @@ The Edge will also be responsible for sending the received parameters to our Clo
 \begin{itemize}
     \item The up to date watering schedule
     \item The potentially harmful behaviors to the plant's growth
-    \item Overall statistics as well as predictions of the plant's needs
+    \item Overall statistics as well as predictions of the plant's needs\\
 \end{itemize}
 
-The app will be developed using Flutter with Dart as the programming language.\\
+\subsubsection*{Programming language}
+Regarding the development of the Edge, we want to develop an application that is suitable for both an android and an IOS operating system. As we have seen in the section about implementation options, Flutter is a new framework capable of multi-platform development. A single code can be used for an android and IOS application, which reduces development time.
+We choose \textbf{Flutter} for its performance with a graphics engine that ensures similar behavior and performance on Android and iOS. Flutter's rendering engine is developed in C++, which is a language offering better performance than React Native's, developed in Javascript.
+In addition, we benefit from the advantages of the \textbf{Dart} language, used for the development of Flutter, which is easy to understand for beginners.
+Finally, the Flutte's Hot Reloading function allows us to instantly see the changes made to the code in order to reflect them in the application, and thus gain efficiency in adding features or fixing bugs.\\
+
 As we will explain in the next chapter, we will use the MQTT protocol to communicate our Edge solution with our Cloud solution, as MQTT is the favored protocol supported by the Cloud IOT Functions service, which we will be using to communicate our Edge and our Device.
 
 \subsection{Cloud}
-Finally, Amazon Web Services is the solution we settled on for cloud computing even tough the two solutions we were considering were similar. We will use the object storage service Amazon S3, which provides industry-leading scalability, data availability, security, and performance, to store the data. S3 enables us to store and safeguard any volume of data while optimizing costs. 
+Finally, \textbf{Amazon Web Services} is the solution we settled on for cloud computing even tough the two solutions we were considering were similar. We will use the object storage service Amazon S3, which provides industry-leading scalability, data availability, security, and performance, to store the data. S3 enables us to store and safeguard any volume of data while optimizing costs. 
+
+To meet the specifications of a non-relational database, we will use the \textbf{DynamoDB} service offered by AWS. The advantage of using a fully managed service is to reduce the time spent on operations.
+In addition, DynamoDB offers immediate security with a model based on identity and access management (IAM). It is not possible to access DynamoDB from the open internet as it is not directly addressed, requests route through an API gateway, and AWS manages authorization from here.
+On the other hand MongoDB is secure, but the default configuration is not, it can be particularly vulnerable to access violations. 
+
 \textcolor{red}{Need to add about computer platform for hosting our website for the app}
