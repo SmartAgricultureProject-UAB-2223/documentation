@@ -1,0 +1,38 @@
+\section{System implementation}
+Now that we have analyzed and compared various components, and communication protocols options, we will try to describe and define the final HPCS product. We will each selected options below.
+\subsection{Device}
+The Device includes every component necessary for obtaining the data required for the system to function properly.
+Therefore it involves a board, a temperature and humidity sensor as well as a Ph sensor. With the help of these components, we will be able to measure and monitor the current conditions surrounding a plant's development and offer appropriate directions to improve those conditions. As a result, we will be able to give knowledgeable advice to properly care for a indoor plant.
+\subsubsection{MCU Board}
+We have chosen the board ESP32-PICO-D4 because it offers Bluetooth Low Energy in a more compact version (only 7x7mm). It is also the board that has the highest input pins with the best market value.
+Considering its ultra-small size, robust performance and low-energy consumption, the ESP32-PICO-D4 board is well suited for any space-limited or battery-operated applications, such as our HPCS product.
+Moreover considering that we won't be storing consecutive repetitive measurements values we are assuming that we would be able to store one read of all sensors in 32 to 8 bytes depending on the optimization performed. Therefore it is safe to assume we will be able to use the 4MB of SPI Flash memory of the module to act as buffer in between Bluetooth connection and the transfer of the sensor measurements to the edge.
+
+\subsubsection{Humidity/Temperature sensor}
+HTU31 : best temperature accuracy and range --> best price with average to low energy consumption, size and weight 
+\subsubsection{Light sensor}
+TSL2591 : best light range, smallest size and weight : higher price than the other but justified by the specs
+\subsubsection{Ph sensor}
+SEN0161 : both options had similar specs but this one is more advantageous for bulk buys and industrialization
+\subsubsection{Battery}
+CR2450 : lowest price, average to low weight, price and size and medium to high capacity
+\subsubsection{Plastic case}
+1553WBBK : IP65 rating, waterproof board coverage 
+\url{https://www.hammfg.com/part/1553WBBK?referer=1180}
+
+\subsection{Edge}
+The concept behind the HPCS is to help monitor a plant's environment through an easy-to-use and portable product. Therefore we have decided to use an Android and iOS mobile app as our Edge. This app is in charge of establishing a Bluetooth Low Energy connection with the Device. \\
+After receiving the environment measurements, the app will display the received values on a carefully designed user interface. The app will also show what is the range of safe values for each parameter, this "safe" category will be specific to each plant based on the sensor default threshold settings or the ones set by the user. \\
+The Edge will also be responsible for sending the received parameters to our Cloud solution, where our analysis model will carry out the required computation to process the environmental data received from the components. When the process is finished, the user will be notified of:
+\begin{itemize}
+    \item The up to date watering schedule
+    \item The potentially harmful behaviors to the plant's growth
+    \item Overall statistics as well as predictions of the plant's needs
+\end{itemize}
+
+The app will be developed using Flutter as the programming language.\\
+As we will explain in the next chapter, we will use the MQTT protocol to communicate our Edge solution with our Cloud solution, as MQTT is the favored protocol supported by the Cloud IOT Functions service, which we will be using to communicate our Edge and our Device.
+
+\subsection{Cloud}
+Finally, Amazon Web Services is the solution we settled on for cloud computing even tough the two solutions we were considering were similar. We will use the object storage service Amazon S3, which provides industry-leading scalability, data availability, security, and performance, to store the data. S3 enables us to store and safeguard any volume of data while optimizing costs. 
+\textcolor{red}{Need to add about computer platform for hosting our website for the app}
