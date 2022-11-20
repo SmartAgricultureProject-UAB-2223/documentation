@@ -59,7 +59,7 @@ The tables below show the different options for the four sensors required in our
         \textbf{Model} & \href{https://www.adafruit.com/product/4681}{BH1750} & \href{https://learn.adafruit.com/tsl2561}{TSL2591} & \href{https://www.dfrobot.com/product-274.html}{SEN0043}\\
         \textbf{Light range (lux)} & 1 - 65535 & 0,000188 - 88000 & 1 – 1000\\
         \textbf{Waterproof} & No & No & No\\
-        \textbf{Voltage (V)} & 3.3 ~ 6 & 3.3 ~ 5 & 3.3 ~ 5.5\\
+        \textbf{Voltage (V)} & 3.3 - 6 & 3.3 - 5 & 3.3 - 5.5\\
         \textbf{Current (mA)} & 0.12 & 0.5 & 20\\
         \textbf{Size (cm)} & 2.5 x 1.7 & 1.9 x 1.6 & 3.0 x 2.2\\
         \textbf{Weight (g)} & 1.1 & 1.1 & 5\\
@@ -97,19 +97,19 @@ They are very similar to each other but can differ in their lifetime and size. P
 There are many boards available on the market, most of which would be suitable for
 our system. The following comparison between some of them is based on price, size,
 and power consumption.
-\begin{table}
-    \renewcommand{\arraystretch}{2}
-    \begin{tabularx}{\columnwidth}{|l|c|c|c|c|}
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{c c c c c}
         \hline
         \textbf{Platform} & \textbf{Price} & \textbf{Size (mm)} & \textbf{BLE} & \textbf{Input pins} \\
         \hline
         Arduino Nano 33 & €22.80 & $45 \times 18$ & Yes & 14 \\
-        \hline
         ESP32-PICO-D4 & €4.95 & $7 \times 7$ & Yes & 20 \\
-        \hline
         ATmega328 Nano & €8.95 & $44 \times 18$ & No & 14 \\
         \hline
-    \end{tabularx}
+        \end{tabular}
+    \caption{Arduinos and alternative platforms}
+    \label{tab:arduinos_alternative_platforms}
 \end{table}
 
 All these boards are very similar in terms of power consumption and programming
@@ -145,9 +145,9 @@ ignoring free tier options (they are not relevant for our purposes, as the syste
 eventually be deployed in a real-world scenario where the limitations of the free
 tier are not relevant) and with yearly contracts in mind.
 
-\begin{table}[htbp]
+\begin{table}[!h]
     \centering
-    \begin{tabularx}{\columnwidth}{|l|c|c|}
+    \begin{tabular}{c c c}
         \hline
         \textbf{Feature} & \textbf{AWS} & \textbf{Azure} \\
         \hline
@@ -155,12 +155,14 @@ tier are not relevant) and with yearly contracts in mind.
             \$0.25/GB per month & \$0.25/GB per month \\
          & \$1.25/m writes & \$0.28/m requests \\
          & \$0.25/m reads \\
-        \hline
+         \hline
         Linux Server Pricing &
             \$10/month (T2.small) & 
             \$10/month (B1ms) \\
         \hline
-        \end{tabularx}
+        \end{tabular}
+    \caption{Cloud options}
+    \label{tab:cloud_options}
 \end{table}
 
 As seen, the main difference is in the database pricing. AWS is cheaper for reads,
