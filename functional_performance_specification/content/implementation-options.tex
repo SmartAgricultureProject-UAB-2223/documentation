@@ -248,7 +248,6 @@ For general purpose message queuing, AMQP offers more flexibility than MQTT, at 
 \subsubsection{HTTPS} is a heavy text-based protocol working on a request/response model. A client sends a request to the server, and the server sends back a response.\\
 The main benefit of HTTPS for use in IoT is its familiarity to developers which are likely to have had implemented web solutions of one kind or another. A consequence of this is the availability of client libraries and servers. Additionally it is scalable and can be used with multiple devices.\\
 
-
 As MQTT was designed for IoT solutions it fits many more IoT scenarios than its counterparts. \\
 Will and retained messages are two MQTT capabilities that AMQP does not directly support \cite{b2}. Moreover, mistakes might be made when configuring routing topologies of AMQP, which is impossible in the more straightforward MQTT environment.\\
 The cost of connection setup is a small drawback of MQTT versus HTTPS. This overhead may be higher than HTTPS if each TCP session only sends one message. However, because this is not a typical IoT case, MQTT soon becomes advantageous when several messages are transmitted and received within the same TCP session \cite{b3}. HTTPS also needs more power and memory to function than MQTT.\\

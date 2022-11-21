@@ -9,7 +9,7 @@ Considering its ultra-small size, robust performance and low-energy consumption,
 Moreover considering that we won't be storing consecutive repetitive measurements values we are assuming that we would be able to store one read of all sensors in 32 to 8 bytes depending on the optimization performed. Therefore it is safe to assume we will be able to use the 4MB of SPI\footnote{SPI (Serial Peripheral Interface) flash memory is a type of non-volatile storage that is electrically eraseable and rewriteable, an can talk to a variety of devices.} Flash memory of the module to act as buffer in between Bluetooth connection and the transfer of the sensor measurements to the Edge.
 
 \subsubsection{Humidity/Temperature sensor}
-HTU31 : best temperature accuracy and range --> best price with average to low energy consumption, size and weight 
+HTU31 : best temperature accuracy and range, best price with average to low energy consumption, size and weight 
 \subsubsection{Light sensor}
 TSL2591 : best light range, smallest size and weight : higher price than the other but justified by the specs
 \subsubsection{Ph sensor}
@@ -17,7 +17,7 @@ SEN0161 : both options had similar specs but this one is more advantageous for b
 \subsubsection{Battery}
 CR2450 : lowest price, average to low weight, price and size and medium to high capacity
 \subsubsection{Plastic case}
-1553WBBK : IP65 rating, waterproof board coverage 
+1553WBBK : IP65 rating, waterproof board coverage.
 \url{https://www.hammfg.com/part/1553WBBK?referer=1180}\\
 
 \subsubsection*{Programming language}
@@ -27,10 +27,51 @@ We program this board using VS Code (Microsoft Visual Studio Code) with the Plat
 PlatformIO is an open source ecosystem for IoT development, especially for the ESP32 Pico Kit\cite{b8}. This IDE platform also allows us to program BLE via libraries for ESP32. 
 Thus, the programming langage we use is \textbf{C++} which enables developers to create a portable software that can run on various operating systems.
 
+\subsubsection*{Data storage}
+Data will be stored on the device in the format of a raw binary file, containing 
+one measurement and a series of deltas.
+\begin{itemize}
+    \item The first 5 bytes of the file will thus be the baseline, containing
+a date and time as a simple set of year since 2000, month, day of the month,
+hour and minute of the day, all as 8-bit integers.
+    \item The next 5 bytes will be the measurements, in the following format:
+    \begin{itemize}
+        \item Temperature over -10, in half-celsius degrees, as an unsigned 8-bit
+        integer (e.g. 0 = -10, 1 = -9.5, 2 = -9, etc.). This allows for a range
+        of -10 to ~90 degrees Celsius, more than enough for our usecase.
+        \item Humidity, as an unsigned 8-bit integer representing 5\% increases.
+        \item pH, as an unsigned 8-bit integer representing 0.25 pH units starting
+        from 0 (e.g. 0 = 3, 1 = 3.25, 2 = 3.5, etc.).
+        \item light, as a 16-bit integer representing the light level in lux.
+    \end{itemize}
+    \item After padding to the nearest byte, there will follow a series of deltas.
+    Each delta will be in the following format:
+    \begin{itemize}
+        \item A dynamically sized integer representing the time since the last delta,
+        in minutes. This integer will be encoded with the first byte representing
+        the number of bytes used to encode the integer, followed by the actual integer.
+        \item A byte representing the type of change (temperature, humidity, pH, light),
+        and an integer representing the change in the value, of the same size as 
+        the corresponding measurement. This is repeated for as many changes as there
+        are.
+        \item A 0xFF byte
+    \end{itemize}
+    Blank deltas will not be stored.
+\end{itemize}
+
 \subsection{Edge}
-The concept behind the HPCS is to help monitor a plant's environment through an easy-to-use and portable product. Therefore we have decided to use an Android and iOS mobile app as our Edge. This app is in charge of establishing a Bluetooth Low Energy connection with the Device. \\
-After receiving the environment measurements, the app will display the received values on a carefully designed user interface. The app will also show what is the range of safe values for each parameter, this "safe" category will be specific to each plant based on the sensor default threshold settings or the ones set by the user. \\
-The Edge will also be responsible for sending the received parameters to our Cloud solution, where our analysis model will carry out the required computation to process the environmental data received from the components. When the process is finished, the user will be notified of:
+The concept behind the HPCS is to help monitor a plant's environment through an
+easy-to-use and portable product. Therefore we have decided to use an Android and
+iOS mobile app as our Edge. This app is in charge of establishing a Bluetooth Low
+Energy connection with the Device. \\
+After receiving the environment measurements, the app will display the received
+values on a carefully designed user interface. The app will also show what is the
+range of safe values for each parameter, this "safe" category will be specific to
+each plant based on the sensor default threshold settings or the ones set by the user. \\
+The Edge will also be responsible for sending the received parameters to our Cloud
+solution, where our analysis model will carry out the required computation to process
+the environmental data received from the components. When the process is finished,
+the user will be notified of:
 \begin{itemize}
     \item The up to date watering schedule
     \item The potentially harmful behaviors to the plant's growth
@@ -38,20 +79,48 @@ The Edge will also be responsible for sending the received parameters to our Clo
 \end{itemize}
 
 \subsubsection*{Programming language}
-Regarding the development of the Edge, we want to develop an application that is suitable for both an android and an IOS operating system. As we have seen in the section about implementation options, Flutter is a new framework capable of multi-platform development. A single code can be used for an android and IOS application, which reduces development time.
-We choose \textbf{Flutter} for its performance with a graphics engine that ensures similar behavior and performance on Android and iOS. Flutter's rendering engine is developed in C++, which is a language offering better performance than React Native's, developed in Javascript.
-In addition, we benefit from the advantages of the \textbf{Dart} language, used for the development of Flutter, which is easy to understand for beginners.
-Finally, the Flutte's Hot Reloading function allows us to instantly see the changes made to the code in order to reflect them in the application, and thus gain efficiency in adding features or fixing bugs.\\
+Regarding the development of the Edge, we want to develop an application that is
+suitable for both an android and an IOS operating system. As we have seen in the
+section about implementation options, Flutter is a new framework capable of multi-platform
+development. A single codebase can be used for an android and IOS application, which reduces
+development time. \\
+We choose \textbf{Flutter} for its performance with a graphics engine that ensures
+similar behavior and performance on Android and iOS. Flutter's rendering engine
+is developed in C++, which is a language offering better performance than React Native's,
+developed in Javascript. \\
+In addition, we benefit from the advantages of the \textbf{Dart} language, used
+for the development of Flutter, which is easy to understand for beginners. \\
+Finally, Flutter's Hot Reloading function allows us to instantly see the changes
+made to the code in order to reflect them in the application, and thus gain efficiency
+in adding features or fixing bugs.\\
 
-As we will explain in the next chapter, we will use the MQTT protocol to communicate our Edge solution with our Cloud solution, as MQTT is the favored protocol supported by the Cloud IOT Functions service, which we will be using to communicate our Edge and our Device.
+As we will explain in the next chapter, we will use the MQTT protocol for communication
+between our Edge solution with our Cloud solution.
 
 \subsection{Cloud}
-Finally, \textbf{Amazon Web Services} is the solution we settled on for cloud computing even tough the two solutions we were considering were similar. We will use the object storage service Amazon S3, which provides industry-leading scalability, data availability, security, and performance, to store the data. S3 enables us to store and safeguard any volume of data while optimizing costs. 
+Finally, \textbf{Amazon Web Services} is the solution we settled on for cloud computing
+even tough the two solutions we were considering were similar. \\
 
-To meet the specifications of a non-relational database, we will use the \textbf{DynamoDB} service offered by AWS. The advantage of using a fully managed service is to reduce the time spent on operations.
-In addition, DynamoDB offers immediate security with a model based on identity and access management (IAM). It is not possible to access DynamoDB from the open internet as it is not directly addressed, requests route through an API gateway, and AWS manages authorization from here.
-On the other hand MongoDB is secure, but the default configuration is not, it can be particularly vulnerable to access violations. 
+To meet the specifications of a non-relational database, we will use the \textbf{DynamoDB}
+service offered by AWS. The advantage of using a fully managed service is to reduce
+the time spent on operations. \\
+In addition, DynamoDB offers immediate security with a model based on identity and
+access management (IAM). It is not possible to access DynamoDB from the open internet
+as it is not directly addressed, requests route through an API gateway, and AWS manages
+authorization from here. \\
+On the other hand MongoDB is secure, but the default configuration is not, it can
+be particularly vulnerable to access violations. \\
 
-\textcolor{red}{Need to add about computer platform for hosting our website for the app}\\
+Our computations will be carried out by a \textbf{Lambda} function. This function
+will be triggered by an \textbf{ÆWS IoT Core} action every time a new measurement
+is received from the device as an MQTT message. \\
+
+Access to our API will be through \textbf{AWS Gateway}, which will be used to create
+a REST API for on-demand retrieval of data from our database. \\
+
+User authentication would go through \textbf{AWS Cognito}.
 
 \subsubsection*{Programming language}
+On the cloud side, we will use the \textbf{Python} programming language, as it is
+the one with the most support on AWS Lambda, and also has excellent support for
+data analysis. \\

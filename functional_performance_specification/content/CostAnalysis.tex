@@ -2,7 +2,9 @@
 Regarding the cost we chose to divide it into two sections, the unit cost of the device and the cost of the cloud.
 
 \subsection{Unitary costs}
-The main cost of the device is from the components themselves. Therefore the following table will gather each of the selected components and their cost (converted from USD if necessary with the rate 1\$ = 0.96€).\\
+The main cost of the device is from the components themselves. Therefore the following
+table will gather each of the selected components and their cost (converted from USD
+if necessary with the rate 1\$ = 0.96€).\\
 
 \begin{table}[htbp]
     \centering
@@ -23,7 +25,74 @@ The main cost of the device is from the components themselves. Therefore the fol
     \label{tab:my_label}
 \end{table}
 
-The total cost of the device's components is 48.96€. Moreover since the battery CR2450 is rechargeable there won't be a need to replace the battery as it can simply get charged once the battery runs low.
+The total cost of the device's components is 48.96€. Moreover since the battery CR2450
+is rechargeable there won't be a need to replace the battery as it can simply get
+charged once the battery runs low.
 
 \subsection{Cloud subscription}
-\textcolor{red}{Need to know how much data we are dealing with before estimating the costs of storage -Luca you need to finish rewriting the Data format section}  [cf Annexe : Figure \ref{fig:AWS pricing}].
+The cloud services we use are AWS IoT, AWS Lambda, AWS DynamoDB, AWS Cognito and AWS
+SNS. \\
+The pricing estimate for the cloud services is based on three potential situations:
+\begin{itemize}
+    \item A closed beta period, with not many users, a few thousand devices in
+          total (5000 devices)
+    \item After the launch and widespread deployment, assuming a big number of users
+          (100.000 devices)
+\end{itemize}
+
+\subsubsection{Closed Beta Period}
+During this hypothetical closed beta period, we would have a few thousand devices in total.
+As such, the following services would be necessary:
+\begin{itemize}
+    \item A DynamoDB containing readings and calculations, with a capacity, at peak, of
+          20 GBs, with less than a million reads happening per month and at most
+          20000 writes per day. This, using the on-demand services of DynamoDB, would cost
+          \$6.66 per month, most of the cost being storage related (this is thus
+          a "worst-case" estimate).
+    \item AWS Lambdas, which would be used to execute data analysis on the readings
+          and to send notifications to the users. The number of executions would
+          be at most 10000 per day, and the memory used would be at most 512MB
+          as there's yet not much data to analyze. Assuming our lambdas would not
+          run for more than 1 second each (which is already a gross overestimation
+          of actual execution time), we would still fit into the "Always Free" tier
+          of AWS Lambda.
+    \item AWS Cognito with 5000 users. This still fits the free tier.
+    \item AWS IoT Core, with 5000 devices, sending 50 messages a month each of 
+          up to 4KBs, each triggering up to 2 rules. This would cost \$0.42 per
+          month.
+    \item AWS API Gateway, with ~20.000 API calls per day. This would cost \$2.13
+          per month, assuming we use the REST API option.
+    \item AWS SNS, with at most 10.000 notifications per day. This still fits the
+          free tier.
+\end{itemize}
+
+This all comes up to a total of \$9.21 per month, which is \$0.001842 per device
+per month, or \$0.0221 per device per year.
+
+\subsubsection*{After the launch}
+After launch and widespread deployment, we should be able to support up to 100.000
+users. This would mean that the following services would be necessary:
+\begin{itemize}
+    \item A DynamoDB containing readings and calculations, with a capacity, at peak, of
+          512 GBs, with up to 500.000 reads happening per day and up to
+          200.000 writes per day. This, using the on-demand services of DynamoDB,
+          sums up to \$155.65 per month.
+    \item AWS Lambdas. These should be now split
+          into two tiers, one for the data analysis and one for the notifications.
+          \begin{itemize}
+            \item Data analysis: 200.000 executions per day, with up to 2GB of memory
+                  used per execution. This would cost \$204 per month.
+            \item Notifications: Up to 500.000 executions per day, with at most
+                  128MB of memory used per execution. This would cost \$2.84 per
+                  month.
+          \end{itemize}
+    \item AWS Cognito with 100.000 users. This costs \$275 per month.
+    \item AWS IoT Core, with 100.000 devices, sending 50 messages a month each of 
+          up to 4KBs, each triggering up to 2 rules. This would cost \$8.45 per
+          month.
+    \item AWS API Gateway, with ~500.000 API calls per day. This would cost \$53.23
+          per month, assuming we use the REST API option.
+\end{itemize}
+
+This all comes up to a total of \$699.17 per month, which is \$0.0069917 per device
+per month, or \$0.0839004 per device per year.
